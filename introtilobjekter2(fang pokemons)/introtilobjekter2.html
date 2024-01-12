@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+
+</head>
+<body>
+    <div id="app"></div>
+
+    <script>
+        let pikachu = {
+            name: "Pikachu",
+            health: 45,
+            image: "Images/pikachu.png",
+            level: 8,
+        };
+
+        let bulbasaur = {
+            name: "Bulbasaur",
+            health: 70,
+            image: "Images/bulbasaur.png",
+            level: 12,
+        };
+
+        let oranguru = {
+            name: "Oranguru",
+            health: 170,
+            image: "Images/oranguru.png",
+            level: 45,
+        };
+
+        let drowzee = {
+            name: "Drowzee",
+            health: 90,
+            image: "Images/drowzee.png",
+            level: 33,
+        };
+
+        let possiblePokemon = [pikachu, bulbasaur, oranguru, drowzee];
+        let randomPokemon;
+
+        let players = {
+            Bjarne: {
+                playerName: "Bjarne",
+                playerImage: "Images/pokemonTrainerIdle.png",
+                playerPokemon: [],
+            },
+            Lars: {
+                playerName: "Lars",
+                playerImage: "Images/gandhi.png",
+                playerPokemon: [],
+            }
+        }
+
+        let app = document.getElementById('app');
+
+        updateView();
+        function updateView(){
+            getRandomPokemon();
+            app.innerHTML = /*HTML*/`
+            <div class="container">
+                <div class="opposingPokemon">
+                    <div>${randomPokemon.name}</div>
+                    <div>lvl: ${randomPokemon.level}</div>
+                    <img src="${randomPokemon.image}">
+                </div>
+
+                <div class="bottomScreen">
+                    <div class="player">
+                        <img src="${players.Lars.playerImage}">
+                        <div>${players.Lars.playerName}</div>
+                    </div>
+                    
+                    <div class="buttonContainer">
+                        <button onclick="catchPokemon()">Fang></button>
+                        <button onclick="updateView()">Finn en annen></button>
+                        <button onclick="showMyPokemonsView()">Vis dine pokemon</button>
+                    </div>
+                </div>
+            </div>
+            `;
+        }
+
+        function caughtPokemonView(){
+            app.innerHTML = /*HTML*/ `
+            <div class="caughtContainer">
+                <h1>Du fanget ${players.Lars.playerPokemon[players.Lars.playerPokemon.length - 1].name}</h1>
+                <div class="buttonContainer">
+                    <button onclick="updateView()">Finn en annen</button>
+                    <button onclick="showMyPokemonsView()">Vis dine pokemon</button>
+                </div>
+            </div>
+            `;
+        }
+
+        function showMyPokemonsView(){
+            app.innerHTML = /*HTML*/ `
+            <div>
+            Her er en liste av dine fanget pokemons: ${JSON.stringify(players.Lars.playerPokemon)}
+            </div>
+            `;
+        }
+
+        function catchPokemon(){
+            players.Lars.playerPokemon.push(randomPokemon);
+            caughtPokemonView();
+        }
+
+        // function storeCaughtPokemon(){
+        //     console.log(players.Lars.playerPokemon);
+        // }
+
+        function getRandomPokemon(){
+            let randomNum = Math.floor(Math.random() * possiblePokemon.length);
+            randomPokemon = possiblePokemon[randomNum];
+            console.log(randomPokemon)
+        }
+    </script>
+</body>
+</html>
